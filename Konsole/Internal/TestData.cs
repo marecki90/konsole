@@ -5,11 +5,40 @@ using System.Runtime.ExceptionServices;
 
 namespace Konsole.Internal
 {
+    public class WordSet
+    {
+        public string[] Adjectives { get; set; }
+        public string[] Modifiers { get; set; }
+    }
+
     // generates non  repeating useful testdata. Important for manual testing to be effective.
     public static class TestData
     {
         // some inspiration, source for names with non latin encodings.
         // https://en.wikipedia.org/wiki/List_of_the_most_common_surnames_in_Europe#Latvia
+
+        public static WordSet NameSets = new WordSet
+        {
+            Adjectives = new string[60]
+            {
+                "Red", "Heavy", "Fast", "Blazing", "Deep", "Dark", "Solid", "Sharp", "Razor", "Grit",
+                "Angel", "Blue", "White","Black", "Ghost", "Blaze", "Burning", "Slippery", "Project", "Green",
+                "Orange","Slow", "Risky", "Stable","Bright", "Rough", "Smooth", "Fake", "Stub", "Mock",
+                "Gritty", "Angelic", "Whiter", "Iberian", "Russian", "Sand","Jungle", "Southern","Pantanal","Sunda",
+                "Flat", "BlackFooted", "SharpEyed","BlueEyed", "GreenEyed","African","Snow", "Desert", "Moon", "Sun",
+                "Golden", "Sea", "CalmSea", "DarkSea", "Mount", "Long", "A", "B", "X", "Y"
+            },
+            Modifiers = new string[70]
+            {
+                "Lion", "Tiger","Mercury", "Gold", "Silver", "Adamantium","Snow", "Mouse", "Dart","Start",
+                "Cut", "Leather", ".io",".com", "ist", "y", "ly", "er", "s", "Diamond",
+                "Opal", "Quartz", "Spark", "Launch", "Apple", "Orange", "Pinapple","Pen", "Cobra", "Eagle",
+                "Fox", "Hound", "Horse", "Panther", "Lynx", "Bobcat", "Puma", "Cougar", "Leopard","Tigrina",
+                "Owl", "Falcon", "Osprey", "Hawk", "Merlin", "Kite", "Sabre", "Katana", "Rapier", "Hammer",
+                "Denali","Everest","Peaks","Rainier", "K2", "Massive","Qogir","Lhotse","Makula","Oyu",
+                "Parbat", "0","1","2","3","4","5","6","7","8"
+            }
+        };
 
 
         /// <summary>
@@ -20,37 +49,36 @@ namespace Konsole.Internal
             if (howMany > 4200) howMany = 4200;
 
             // names that do not contain any special characters that windows console cannot display nicely! How wonderfully politically incorrect ;-O
-            var namesets = new
-            {
-                Adjectives = new string[60]
-                {
-                    "Red", "Heavy", "Fast", "Blazing", "Deep", "Dark", "Solid", "Sharp", "Razor", "Grit",
-                    "Angel", "Blue", "White","Black", "Ghost", "Blaze", "Burning", "Slippery", "Project", "Green",
-                    "Orange","Slow", "Risky", "Stable","Bright", "Rough", "Smooth", "Fake", "Stub", "Mock",
-                    "Gritty", "Angelic", "Whiter", "Iberian", "Russian", "Sand","Jungle", "Southern","Pantanal","Sunda",
-                    "Flat", "BlackFooted", "SharpEyed","BlueEyed", "GreenEyed","African","Snow", "Desert", "Moon", "Sun",
-                    "Golden", "Sea", "CalmSea", "DarkSea", "Mount", "Long", "A", "B", "X", "Y"
-                },
-                Modifier = new string[70] 
-                {
-                    "Lion", "Tiger","Mercury", "Gold", "Silver", "Adamantium","Snow", "Mouse", "Dart","Start",
-                    "Cut", "Leather", ".io",".com", "ist", "y", "ly", "er", "s", "Diamond",
-                    "Opal", "Quartz", "Spark", "Launch", "Apple", "Orange", "Pinapple","Pen", "Cobra", "Eagle",
-                    "Fox", "Hound", "Horse", "Panther", "Lynx", "Bobcat", "Puma", "Cougar", "Leopard","Tigrina",
-                    "Owl", "Falcon", "Osprey", "Hawk", "Merlin", "Kite", "Sabre", "Katana", "Rapier", "Hammer",
-                    "Denali","Everest","Peaks","Rainier", "K2", "Massive","Qogir","Lhotse","Makula","Oyu",
-                    "Parbat", "0","1","2","3","4","5","6","7","8",
-                }
-            };
 
-            var names = from first in namesets.Adjectives
-                        from last in namesets.Modifier
+            var names = from first in NameSets.Adjectives
+                        from last in NameSets.Modifiers
                         select string.Format(format, first, last);
 
             var shuffled = ShuffleStrings(names);
             return shuffled.Take(howMany).ToArray();
         }
 
+        public static string RandomAdjective
+        {
+            get
+            {
+                var r = new Random();
+                int i = r.Next(NameSets.Adjectives.Length);
+                return NameSets.Adjectives[i];
+            }
+        }
+
+        public static string RandomModifier
+        {
+            get
+            {
+                var r = new Random();
+                int i = r.Next(NameSets.Modifiers.Length);
+                return NameSets.Modifiers[i];
+            }
+        }
+
+        public static string RandomName => $"{RandomAdjective}{RandomModifier}";
 
         /// <summary>
         /// generate random (unique) file names. 
@@ -69,7 +97,21 @@ namespace Konsole.Internal
 
         }
 
-
+        // names that do not contain any special characters that windows console cannot display nicely! How wonderfully politically incorrect ;-O
+        private static string[][] names = {
+            new[]
+            {
+                "Chrudos", "Kazi", "Liana", "Sarka", "Jozefa","Gloria", "Alan", "Susan", "Cathy", "Mahakhinaoratalova",
+                "Benedetto", "Marco", "Sinzenza", "Ke", "Graham", "Chloe", "Diane", "Fred"
+            },
+            new[]
+            {
+                "Beridze", "Rebane", "Tsiklauri", "Angelopoulos","Jackson", "Papadopoulos", "Mac Giolla Mhuire", "O'Brien",
+                "O Ceanneidigh", "Berzins", "Vītols", "Dabrowski", "Kendriksen", "Popov", "Kuznetsov",
+                "Kaminski", "Walters", "Ferarri", "Ricci", "Baker", "Vafoozala", "Sinzenza", "Ke", "Frank",
+                "Watson"
+            }
+        };
 
         /// <summary>
         /// make a set of names, formatstring {0}=firstname, {1}=lastname
