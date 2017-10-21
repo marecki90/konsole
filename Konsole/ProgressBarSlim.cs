@@ -91,10 +91,10 @@ namespace Konsole
 
         public void Refresh(int current, string itemText)
         {
-            var item = itemText ?? "";
-            var clippedText = item.FixLeft(TextWidth);
             lock (_locker)
-            {                
+            {
+                var item = itemText ?? "";
+                var clippedText = item.FixLeft(TextWidth);
                 _item = item;
                 var state = _console.State;
                 _current = current.Max(Max);
