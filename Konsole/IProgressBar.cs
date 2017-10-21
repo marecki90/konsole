@@ -7,6 +7,7 @@
         string Line1 { get; }
         string Line2 { get; }
         int Max { get; set; }
+        int Current { get; }
         void Refresh(int current, string item);
         void Refresh(int current, string format, params object[] args);
         void Next(string item);

@@ -50,6 +50,8 @@ namespace Konsole
             _bar.Refresh(current,format, args);
         }
 
+        public int Current => _bar.Current;
+
         public void Refresh(int current, string item)
         {
             _bar.Refresh(current,item);
