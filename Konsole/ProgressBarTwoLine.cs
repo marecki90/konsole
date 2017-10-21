@@ -69,6 +69,8 @@ namespace Konsole
         private string _line2 ="";
         private string _item = "";
 
+        public int Current => _current;
+
         public void Refresh(int current, string item)
         {
             lock (_locker)
