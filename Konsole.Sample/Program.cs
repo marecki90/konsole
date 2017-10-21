@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Konsole.Drawing;
 using Konsole.Forms;
 using Konsole.Internal;
+using Konsole.Layouts;
 using Konsole.Menus;
 using Konsole.Sample.Demos;
 
@@ -28,29 +29,57 @@ namespace Konsole.Sample
 
         private static void Main(string[] args)
         {
-            var con = Window.Open(67, 0, 50, 25, "server", LineThickNess.Single, ConsoleColor.White, ConsoleColor.DarkYellow);
+            SixtyProgressBars();
+            //var con = new Window();
+            //var right = con.SplitRight();
+            //var left = con.SplitLeft();
+            //var menu = new Menu(left, "Samples", ConsoleKey.Escape, 30,
 
-            var output1 = con;
+            //    new MenuItem('f', "Forms", ()=> FormDemos.Run(right)),
+            //    new MenuItem('b', "Boxes", ()=> BoxeDemos.Run(right)),
+            //    new MenuItem('s', "Scrolling", ()=> WindowDemo.Run2(right)),
+            //    new MenuItem('p', "ProgressBar 1 line demo", ()=> ProgressBarDemos.ParallelDemo(right)),
+            //    new MenuItem('q', "ProgressBar 2 line demo", () => ProgressBarDemos.ParallelDemo(right)),
+            //    new MenuItem('t', "Test data", () => TestDataDemo.Run(right)),
+            //    new MenuItem('c', "clear screen", () => con.Clear()),
+            //    new MenuItem('r', "RANDOM", () => RandomStuff(right))
 
-            var menu = new Menu("Samples", ConsoleKey.Escape, 30,
+            //);
 
-                new MenuItem('f', "Forms", ()=> FormDemos.Run(output1)),
-                new MenuItem('b', "Boxes", ()=> BoxeDemos.Run(output1)),
-                new MenuItem('s', "Scrolling", ()=> WindowDemo.Run2(con)),
-                new MenuItem('p', "ProgressBar 1 line demo", ()=> ProgressBarDemos.ParallelDemo(con)),
-                new MenuItem('q', "ProgressBar 2 line demo", () => ProgressBarDemos.ParallelDemo(con)),
-                new MenuItem('t', "Test data", () => TestDataDemo.Run(con)),
-                new MenuItem('c', "clear screen", () => con.Clear()),
-                new MenuItem('r', "RANDOM", () => RandomStuff(con))
+            //menu.OnBeforeMenuItem += (i) => right.Clear();
+            //menu.Run();
+        }
 
-            );
-
-            menu.OnBeforeMenuItem += (i) => con.Clear();
-            menu.Run();
-
+        private static void SixtyProgressBars()
+        {
+            var con = new Window();
+            var left = con.SplitLeft("Entities");
+            var right = con.SplitRight("Validations");
+            var t1 = Task.Run(()=> DoTheThingToTheDbWithTheStuff(left, 30));
+            var t2 = Task.Run(() => DoTheThingToTheDbWithTheStuff(right, 30));
+            Task.WaitAll(t1, t2);
+            Console.WriteLine("All done");
         }
 
 
+        private static void DoTheThingToTheDbWithTheStuff(IConsole window, int cnt)
+        {
+            var r = new Random();
+            var pbs = Enumerable.Range(1, cnt).Select(i =>
+            {
+                var pb = new ProgressBar(window, r.Next(200) + 1);
+                pb.Refresh(1, TestData.RandomName);
+                return pb;
+            }).ToArray();
+
+            for (int i = 0; i < cnt * 100; i++)
+            {
+                Thread.Sleep(r.Next(200));
+                i = r.Next(cnt);
+                var pb = pbs[i];
+                if(pb.Current<100) pb.Next(TestData.RandomName);
+            }
+        }
 
     }
 }
