@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Konsole.Drawing;
 using Konsole.Menus;
 
-namespace Konsole.Layouts
+namespace Konsole
 {
     // TODO: convert to a partial class of Window so that the namespace does not need to be referenced?
     public static class LayoutExtensions

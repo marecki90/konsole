@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Konsole.Drawing;
 using Konsole.Menus;
 
-namespace Konsole.Layouts
+namespace Konsole
 {
     public static class WindowLayoutExtensions
     {
@@ -82,6 +82,11 @@ namespace Konsole.Layouts
         {
             return LayoutExtensions._LeftRight(c, null, false, false, null, foreground);
         }
+
+        //public static (IConsole left, IConsole right) SplitLeftRight(this Window c, string title)
+        //{
+        //    return LayoutExtensions._LeftRight(c, title, false, true, LineThickNess.Single, c.ForegroundColor);
+        //}
 
         public static IConsole SplitLeft(this Window c, string title)
         {

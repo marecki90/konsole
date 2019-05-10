@@ -2,7 +2,7 @@
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using FluentAssertions;
-using Konsole.Layouts;
+ 
 using NUnit.Framework;
 
 namespace Konsole.Tests.WindowTests

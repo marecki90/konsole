@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Konsole.Drawing;
-using Konsole.Layouts;
+ 
 using NUnit.Framework;
 
 namespace Konsole.Tests.WindowTests
@@ -17,6 +17,61 @@ namespace Konsole.Tests.WindowTests
 
         public class LeftRightTests
         {
+            //[Test]
+            //[TestCase(1, 29)]
+            //[TestCase(2, 30)]
+            //[TestCase(3, 31)]
+            //public void ProRatioSplitShouldFillTheParentConsole(int test, int width)
+            //{
+            //    // test to show how uneven lines are split between left and right windows.
+            //    var c = new MockConsole(width, 5);
+            //    var (left,right) = c.SplitLeftRight("left", "right");
+            //    left.WriteLine("one");
+            //    left.WriteLine("two");
+            //    left.Write("three");
+
+            //    right.WriteLine("four");
+            //    right.WriteLine("five");
+            //    right.Write("six");
+            //    Console.WriteLine(c.BufferString);
+
+            //    var _19Cols = new[]
+            //    {
+            //        "┌ left ─┐┌─ right ┐",
+            //        "│one    ││four    │",
+            //        "│two    ││five    │",
+            //        "│three  ││six     │",
+            //        "└───────┘└────────┘"
+            //};
+
+            //    var _20Cols = new[]
+            //    {
+            //        "┌─ left ─┐┌─ right ┐",
+            //        "│one     ││four    │",
+            //        "│two     ││five    │",
+            //        "│three   ││six     │",
+            //        "└────────┘└────────┘"
+            //};
+
+            //    var _21Cols = new[]
+            //    {
+            //        "┌─ left ─┐┌─ right ─┐",
+            //        "│one     ││four     │",
+            //        "│two     ││five     │",
+            //        "│three   ││six      │",
+            //        "└────────┘└─────────┘"
+
+            //};
+
+            //    var expecteds = new[]
+            //    {
+            //    _19Cols, _20Cols, _21Cols
+            //};
+            //    c.Buffer.ShouldBeEquivalentTo(expecteds[test - 1]);
+            //}
+
+
+
             [Test]
             [TestCase(1, 19)]
             [TestCase(2, 20)]
